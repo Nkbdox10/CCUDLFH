@@ -15,30 +15,33 @@ class Tokenizer():
     def __init__(self, tokenizer='whitespace', clean_string=True):
         self.clean_string = clean_string
         tokenizer = tokenizer.lower()
-
-        # Tokenize with whitespace
-        if tokenizer == 'whitespace':
-            print('Loading whitespace tokenizer')
-            self.tokenize = lambda string: string.strip().split()
-
+        
         if tokenizer == 'regex':
             print('Loading regex tokenizer')
             import re
             pattern = r"[A-Z]{2,}(?![a-z])|[A-Z][a-z]+(?=[A-Z])|[\'\w\-]+"
             self.tokenize = lambda string: re.findall(pattern, string)
+        
+        # Tokenize with whitespace
+        elif tokenizer == 'whitespace':
+            print('Loading whitespace tokenizer')
+            self.tokenize = lambda string: string.strip().split()
 
-        if tokenizer == 'spacy':
+        elif tokenizer == 'spacy':
             print('Loading SpaCy')
             import spacy
             nlp = spacy.load('en_core_web_sm')
             self.tokenize = lambda string: [token.text for token in nlp(string)]
 
         # Tokenize with punctuations other than periods
-        if tokenizer == 'nltk':
+        elif tokenizer == 'nltk':
             print('Loading NLTK word tokenizer')
             from nltk import word_tokenize
 
             self.tokenize = word_tokenize
+            
+        else : 
+            # DO NOTHING
 
     def __call__(self, string):
         if self.clean_string:
