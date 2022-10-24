@@ -1,11 +1,11 @@
 from pytorch_pretrained_bert import BertTokenizer
 import torch
 import os
-import codecs
-import json
-import glob
-import random
-import argparse
+# import codecs
+# import json
+# import glob
+# import random
+# import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--encoder_size', default=400, type=int, required=False)
@@ -27,22 +27,6 @@ tot = 0
 maxi = 0
 mini = 1e5
 
-
-def match(sent1, sent2):
-    sent1 = sent1[8:].split()
-    sent2 = sent2.split()
-    # print('ss1',sent1)
-    # print('ss2',sent2)
-
-    common = set(sent1).intersection(set(sent2))
-    # print('c',common)
-    # print(len(common)/(len(set(sent1))))
-    #
-    if len(common) / len(set(sent1)) > 0.90:
-        # print('True')
-        return True
-    else:
-        return False
 
 
 def clean_dataset(dataset_file, json_file):
@@ -153,6 +137,22 @@ def clean_dataset(dataset_file, json_file):
     f_in.close()
     f_json.close()
     return total
+  
+def match(sent1, sent2):
+    sent1 = sent1[8:].split()
+    sent2 = sent2.split()
+    # print('ss1',sent1)
+    # print('ss2',sent2)
+
+    common = set(sent1).intersection(set(sent2))
+    # print('c',common)
+    # print(len(common)/(len(set(sent1))))
+    #
+    if len(common) / len(set(sent1)) > 0.90:
+        # print('True')
+        return True
+    else:
+        return False
 
 
 def seq2token_ids(source_seqs, target_seq):
@@ -217,7 +217,7 @@ def make_dataset(data, file_name='train_data.pth'):
     for d in data:
         print(count)
         d_len = len(d)
-        for i in range(d_len // 2):
+        for i in range(floor(d_len / 2)):
             # print('src', d[:2 * i + 1])
             # print('trg', d[2 * i + 1])
 
