@@ -1,8 +1,10 @@
+import opencv
 import pickle
 import json
+import pandas
 
-f = open("concept_dic_1.pkl","rb")
-data = pickle.load(f)
+df = open("concept_dic_1.pkl","rb")
+data = pickle.load(df)
 
 dict_temp = {}
 
