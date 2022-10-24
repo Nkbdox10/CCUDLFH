@@ -1,11 +1,14 @@
 import json
 import random
 
+import pandas
+import opencv
+
 random.seed()
 
-resource_file = open('files/resources.txt', 'w')
-trainset_file = open('files/trainset.txt', 'w')
-devset_file = open('files/devset.txt', 'w')
+resource_file = open('files/resources.txt', 'wb')
+trainset_file = open('files/trainset.txt', 'wb')
+devset_file = open('files/devset.txt', 'wb')
 
 with open(
         'concept_dict_mini') as json_data:
@@ -31,7 +34,7 @@ for idx, t in enumerate(csk_entities):
 
 
 def build_vocab(corpus):
-    print("Creating vocabulary...")
+    print("Generating Vocabulary...")
     vocab = {}
     for i, pair in enumerate(corpus):
         if i % 1000 == 0:
